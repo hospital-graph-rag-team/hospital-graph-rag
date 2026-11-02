@@ -65,39 +65,50 @@ def generate_doctors(n=10):
     print(f"Generated {len(doctors)} doctors -> {filepath}")
     return doctors
 
-def generate_visits(patients, doctors, n=120):
-    admission_types = ["Outpatient", "Inpatient", "Emergency", "Follow-up"]
+def generate_visits(patients, doctors):
     visits = []
-    start_date = datetime(2023, 1, 1)
-    end_date = datetime(2024, 12, 31)
-    delta_days = (end_date - start_date).days
+    visit_counter = 301
 
-    for i in range(1, n + 1):
-        vid = f"V{300 + i}"
-        patient = random.choice(patients)
-        doctor = random.choice(doctors)
+    # Guarantee multi-visit chronological trajectories
+    for patient in patients:
+        # Every patient gets 2 to 4 sequential visits
+        num_visits = random.randint(2, 4)
         
-        vdate = start_date + timedelta(days=random.randint(0, delta_days))
-        visit_date = vdate.strftime("%Y-%m-%d")
-        admission = random.choice(admission_types)
-
-        visits.append({
-            "visit_id": vid,
-            "patient_id": patient["patient_id"],
-            "doctor_id": doctor["doctor_id"],
-            "visit_date": visit_date,
-            "admission_type": admission
-        })
+        # Primary doctor assigned to the patient for consistency
+        primary_doctor = random.choice(doctors)
+        
+        # Start date between Jan 2023 and Jun 2024
+        current_date = datetime(2023, 1, 1) + timedelta(days=random.randint(0, 500))
+        
+        for visit_seq in range(num_visits):
+            vid = f"V{visit_counter}"
+            visit_counter += 1
+            
+            # Initial visit is Outpatient/Emergency; subsequent are Follow-ups
+            if visit_seq == 0:
+                admission = random.choice(["Outpatient", "Emergency", "Inpatient"])
+            else:
+                admission = "Follow-up"
+                # Follow-ups occur 3 to 8 weeks after the prior visit
+                current_date += timedelta(days=random.randint(21, 60))
+            
+            visits.append({
+                "visit_id": vid,
+                "patient_id": patient["patient_id"],
+                "doctor_id": primary_doctor["doctor_id"],
+                "visit_date": current_date.strftime("%Y-%m-%d"),
+                "admission_type": admission
+            })
 
     filepath = OUTPUT_DIR / "visits.csv"
     with open(filepath, mode="w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=["visit_id", "patient_id", "doctor_id", "visit_date", "admission_type"])
         writer.writeheader()
         writer.writerows(visits)
-    print(f"Generated {len(visits)} visits -> {filepath}")
+    print(f"Generated {len(visits)} sequential visits across {len(patients)} patients -> {filepath}")
     return visits
 
 if __name__ == "__main__":
     p = generate_patients(50)
     d = generate_doctors(10)
-    generate_visits(p, d, 120)
+    generate_visits(p, d)
