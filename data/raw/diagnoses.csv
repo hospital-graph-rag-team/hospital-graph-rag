@@ -1,0 +1,147 @@
+diagnosis_id,visit_id,condition,status
+D0001,V301,Hyperlipidemia,Active
+D0002,V302,Hyperlipidemia,Active
+D0003,V303,Hyperlipidemia,Active
+D0004,V304,Type 2 Diabetes,Active
+D0005,V305,Type 2 Diabetes,Active
+D0006,V306,Hyperlipidemia,Active
+D0007,V307,Hyperlipidemia,Active
+D0008,V308,Hyperlipidemia,Active
+D0009,V309,Hyperlipidemia,Active
+D0010,V310,Type 2 Diabetes,Active
+D0011,V311,Type 2 Diabetes,Active
+D0012,V312,Type 2 Diabetes,Active
+D0013,V313,Type 2 Diabetes,Active
+D0014,V314,Hyperlipidemia,Active
+D0015,V315,Hyperlipidemia,Active
+D0016,V316,Hypertension,Active
+D0017,V317,Hypertension,Active
+D0018,V318,Hyperlipidemia,Active
+D0019,V319,Hyperlipidemia,Active
+D0020,V320,Hyperlipidemia,Active
+D0021,V321,Hyperlipidemia,Active
+D0022,V322,Hyperlipidemia,Active
+D0023,V323,Hyperlipidemia,Active
+D0024,V324,Hyperlipidemia,Active
+D0025,V325,Hyperlipidemia,Active
+D0026,V326,Hyperlipidemia,Active
+D0027,V327,Hyperlipidemia,Active
+D0028,V328,Hyperlipidemia,Active
+D0029,V329,Hyperlipidemia,Active
+D0030,V330,Type 2 Diabetes,Active
+D0031,V331,Type 2 Diabetes,Active
+D0032,V332,Type 2 Diabetes,Active
+D0033,V333,Type 2 Diabetes,Active
+D0034,V334,Hyperlipidemia,Active
+D0035,V335,Hyperlipidemia,Active
+D0036,V336,Hypertension,Active
+D0037,V337,Hypertension,Active
+D0038,V338,Hypertension,Active
+D0039,V339,Hypertension,Active
+D0040,V340,Type 2 Diabetes,Active
+D0041,V341,Type 2 Diabetes,Active
+D0042,V342,Type 2 Diabetes,Active
+D0043,V343,Type 2 Diabetes,Active
+D0044,V344,Hypertension,Active
+D0045,V345,Hypertension,Active
+D0046,V346,Hypertension,Active
+D0047,V347,Hypertension,Active
+D0048,V348,Hypertension,Active
+D0049,V349,Hypertension,Active
+D0050,V350,Hypertension,Active
+D0051,V351,Hypertension,Active
+D0052,V352,Hypertension,Active
+D0053,V353,Hypertension,Active
+D0054,V354,Hypertension,Active
+D0055,V355,Hypertension,Active
+D0056,V356,Type 2 Diabetes,Active
+D0057,V357,Type 2 Diabetes,Active
+D0058,V358,Type 2 Diabetes,Active
+D0059,V359,Type 2 Diabetes,Active
+D0060,V360,Type 2 Diabetes,Active
+D0061,V361,Type 2 Diabetes,Active
+D0062,V362,Hypertension,Active
+D0063,V363,Hypertension,Active
+D0064,V364,Hypertension,Active
+D0065,V365,Hypertension,Active
+D0066,V366,Hypertension,Active
+D0067,V367,Hypertension,Active
+D0068,V368,Type 2 Diabetes,Active
+D0069,V369,Type 2 Diabetes,Active
+D0070,V370,Type 2 Diabetes,Active
+D0071,V371,Type 2 Diabetes,Active
+D0072,V372,Type 2 Diabetes,Active
+D0073,V373,Type 2 Diabetes,Active
+D0074,V374,Type 2 Diabetes,Active
+D0075,V375,Type 2 Diabetes,Active
+D0076,V376,Type 2 Diabetes,Active
+D0077,V377,Hyperlipidemia,Active
+D0078,V378,Hyperlipidemia,Active
+D0079,V379,Hyperlipidemia,Active
+D0080,V380,Hyperlipidemia,Active
+D0081,V381,Hyperlipidemia,Active
+D0082,V382,Hyperlipidemia,Active
+D0083,V383,Hyperlipidemia,Active
+D0084,V384,Hyperlipidemia,Active
+D0085,V385,Hypertension,Active
+D0086,V386,Hypertension,Active
+D0087,V387,Hypertension,Active
+D0088,V388,Hyperlipidemia,Active
+D0089,V389,Hyperlipidemia,Active
+D0090,V390,Hypertension,Active
+D0091,V391,Hypertension,Active
+D0092,V392,Hypertension,Active
+D0093,V393,Hypertension,Active
+D0094,V394,Hypertension,Active
+D0095,V395,Hypertension,Active
+D0096,V396,Hyperlipidemia,Active
+D0097,V397,Hyperlipidemia,Active
+D0098,V398,Hypertension,Active
+D0099,V399,Hypertension,Active
+D0100,V400,Hypertension,Active
+D0101,V401,Hyperlipidemia,Active
+D0102,V402,Hyperlipidemia,Active
+D0103,V403,Hyperlipidemia,Active
+D0104,V404,Hyperlipidemia,Active
+D0105,V405,Hyperlipidemia,Active
+D0106,V406,Type 2 Diabetes,Active
+D0107,V407,Type 2 Diabetes,Active
+D0108,V408,Type 2 Diabetes,Active
+D0109,V409,Type 2 Diabetes,Active
+D0110,V410,Hyperlipidemia,Active
+D0111,V411,Hyperlipidemia,Active
+D0112,V412,Hyperlipidemia,Active
+D0113,V413,Type 2 Diabetes,Active
+D0114,V414,Type 2 Diabetes,Active
+D0115,V415,Hyperlipidemia,Active
+D0116,V416,Hyperlipidemia,Active
+D0117,V417,Hyperlipidemia,Active
+D0118,V418,Hyperlipidemia,Active
+D0119,V419,Hyperlipidemia,Active
+D0120,V420,Hyperlipidemia,Active
+D0121,V421,Hyperlipidemia,Active
+D0122,V422,Hyperlipidemia,Active
+D0123,V423,Type 2 Diabetes,Active
+D0124,V424,Type 2 Diabetes,Active
+D0125,V425,Type 2 Diabetes,Active
+D0126,V426,Type 2 Diabetes,Active
+D0127,V427,Type 2 Diabetes,Active
+D0128,V428,Type 2 Diabetes,Active
+D0129,V429,Type 2 Diabetes,Active
+D0130,V430,Type 2 Diabetes,Active
+D0131,V431,Hyperlipidemia,Active
+D0132,V432,Hyperlipidemia,Active
+D0133,V433,Hyperlipidemia,Active
+D0134,V434,Hypertension,Active
+D0135,V435,Hypertension,Active
+D0136,V436,Hypertension,Active
+D0137,V437,Hypertension,Active
+D0138,V438,Type 2 Diabetes,Active
+D0139,V439,Type 2 Diabetes,Active
+D0140,V440,Hypertension,Active
+D0141,V441,Hypertension,Active
+D0142,V442,Hypertension,Active
+D0143,V443,Hypertension,Active
+D0144,V444,Hypertension,Active
+D0145,V445,Hypertension,Active
+D0146,V446,Hypertension,Active

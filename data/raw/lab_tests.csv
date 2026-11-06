@@ -1,0 +1,147 @@
+test_id,visit_id,test_name,value,unit
+T0001,V301,LDL Cholesterol,183.1,mg/dL
+T0002,V302,LDL Cholesterol,136.8,mg/dL
+T0003,V303,LDL Cholesterol,113.8,mg/dL
+T0004,V304,HbA1c,8.1,%
+T0005,V305,HbA1c,6.7,%
+T0006,V306,LDL Cholesterol,185.5,mg/dL
+T0007,V307,LDL Cholesterol,152.5,mg/dL
+T0008,V308,LDL Cholesterol,206.5,mg/dL
+T0009,V309,LDL Cholesterol,146.8,mg/dL
+T0010,V310,HbA1c,9.0,%
+T0011,V311,HbA1c,7.6,%
+T0012,V312,HbA1c,9.2,%
+T0013,V313,HbA1c,7.0,%
+T0014,V314,LDL Cholesterol,196.4,mg/dL
+T0015,V315,LDL Cholesterol,143.3,mg/dL
+T0016,V316,Systolic BP,179.5,mmHg
+T0017,V317,Systolic BP,152.4,mmHg
+T0018,V318,LDL Cholesterol,202.4,mg/dL
+T0019,V319,LDL Cholesterol,203.8,mg/dL
+T0020,V320,LDL Cholesterol,206.5,mg/dL
+T0021,V321,LDL Cholesterol,199.1,mg/dL
+T0022,V322,LDL Cholesterol,199.9,mg/dL
+T0023,V323,LDL Cholesterol,199.3,mg/dL
+T0024,V324,LDL Cholesterol,182.2,mg/dL
+T0025,V325,LDL Cholesterol,134.9,mg/dL
+T0026,V326,LDL Cholesterol,213.2,mg/dL
+T0027,V327,LDL Cholesterol,150.1,mg/dL
+T0028,V328,LDL Cholesterol,111.3,mg/dL
+T0029,V329,LDL Cholesterol,90.3,mg/dL
+T0030,V330,HbA1c,10.1,%
+T0031,V331,HbA1c,8.4,%
+T0032,V332,HbA1c,6.3,%
+T0033,V333,HbA1c,6.2,%
+T0034,V334,LDL Cholesterol,175.0,mg/dL
+T0035,V335,LDL Cholesterol,143.4,mg/dL
+T0036,V336,Systolic BP,166.0,mmHg
+T0037,V337,Systolic BP,118.0,mmHg
+T0038,V338,Systolic BP,115.4,mmHg
+T0039,V339,Systolic BP,115.1,mmHg
+T0040,V340,HbA1c,10.7,%
+T0041,V341,HbA1c,8.9,%
+T0042,V342,HbA1c,6.4,%
+T0043,V343,HbA1c,5.7,%
+T0044,V344,Systolic BP,157.3,mmHg
+T0045,V345,Systolic BP,121.7,mmHg
+T0046,V346,Systolic BP,115.1,mmHg
+T0047,V347,Systolic BP,115.5,mmHg
+T0048,V348,Systolic BP,156.3,mmHg
+T0049,V349,Systolic BP,131.3,mmHg
+T0050,V350,Systolic BP,115.3,mmHg
+T0051,V351,Systolic BP,169.9,mmHg
+T0052,V352,Systolic BP,143.5,mmHg
+T0053,V353,Systolic BP,115.0,mmHg
+T0054,V354,Systolic BP,154.8,mmHg
+T0055,V355,Systolic BP,115.8,mmHg
+T0056,V356,HbA1c,9.3,%
+T0057,V357,HbA1c,7.0,%
+T0058,V358,HbA1c,6.1,%
+T0059,V359,HbA1c,9.1,%
+T0060,V360,HbA1c,7.0,%
+T0061,V361,HbA1c,5.9,%
+T0062,V362,Systolic BP,151.5,mmHg
+T0063,V363,Systolic BP,151.8,mmHg
+T0064,V364,Systolic BP,151.7,mmHg
+T0065,V365,Systolic BP,153.5,mmHg
+T0066,V366,Systolic BP,173.3,mmHg
+T0067,V367,Systolic BP,129.3,mmHg
+T0068,V368,HbA1c,10.8,%
+T0069,V369,HbA1c,8.0,%
+T0070,V370,HbA1c,9.6,%
+T0071,V371,HbA1c,7.2,%
+T0072,V372,HbA1c,6.0,%
+T0073,V373,HbA1c,5.7,%
+T0074,V374,HbA1c,10.7,%
+T0075,V375,HbA1c,10.5,%
+T0076,V376,HbA1c,10.6,%
+T0077,V377,LDL Cholesterol,202.0,mg/dL
+T0078,V378,LDL Cholesterol,202.6,mg/dL
+T0079,V379,LDL Cholesterol,213.3,mg/dL
+T0080,V380,LDL Cholesterol,215.4,mg/dL
+T0081,V381,LDL Cholesterol,200.1,mg/dL
+T0082,V382,LDL Cholesterol,167.0,mg/dL
+T0083,V383,LDL Cholesterol,141.8,mg/dL
+T0084,V384,LDL Cholesterol,108.9,mg/dL
+T0085,V385,Systolic BP,167.8,mmHg
+T0086,V386,Systolic BP,142.2,mmHg
+T0087,V387,Systolic BP,117.1,mmHg
+T0088,V388,LDL Cholesterol,204.7,mg/dL
+T0089,V389,LDL Cholesterol,156.5,mg/dL
+T0090,V390,Systolic BP,157.9,mmHg
+T0091,V391,Systolic BP,120.2,mmHg
+T0092,V392,Systolic BP,162.0,mmHg
+T0093,V393,Systolic BP,129.2,mmHg
+T0094,V394,Systolic BP,115.4,mmHg
+T0095,V395,Systolic BP,115.2,mmHg
+T0096,V396,LDL Cholesterol,194.3,mg/dL
+T0097,V397,LDL Cholesterol,136.2,mg/dL
+T0098,V398,Systolic BP,154.8,mmHg
+T0099,V399,Systolic BP,131.2,mmHg
+T0100,V400,Systolic BP,115.5,mmHg
+T0101,V401,LDL Cholesterol,217.8,mg/dL
+T0102,V402,LDL Cholesterol,175.1,mg/dL
+T0103,V403,LDL Cholesterol,176.1,mg/dL
+T0104,V404,LDL Cholesterol,135.0,mg/dL
+T0105,V405,LDL Cholesterol,100.7,mg/dL
+T0106,V406,HbA1c,8.3,%
+T0107,V407,HbA1c,7.9,%
+T0108,V408,HbA1c,9.0,%
+T0109,V409,HbA1c,11.5,%
+T0110,V410,LDL Cholesterol,204.4,mg/dL
+T0111,V411,LDL Cholesterol,152.0,mg/dL
+T0112,V412,LDL Cholesterol,122.4,mg/dL
+T0113,V413,HbA1c,8.8,%
+T0114,V414,HbA1c,7.5,%
+T0115,V415,LDL Cholesterol,171.7,mg/dL
+T0116,V416,LDL Cholesterol,174.3,mg/dL
+T0117,V417,LDL Cholesterol,174.7,mg/dL
+T0118,V418,LDL Cholesterol,175.2,mg/dL
+T0119,V419,LDL Cholesterol,165.6,mg/dL
+T0120,V420,LDL Cholesterol,132.6,mg/dL
+T0121,V421,LDL Cholesterol,93.2,mg/dL
+T0122,V422,LDL Cholesterol,70.1,mg/dL
+T0123,V423,HbA1c,8.1,%
+T0124,V424,HbA1c,6.7,%
+T0125,V425,HbA1c,5.8,%
+T0126,V426,HbA1c,5.7,%
+T0127,V427,HbA1c,8.2,%
+T0128,V428,HbA1c,6.2,%
+T0129,V429,HbA1c,6.0,%
+T0130,V430,HbA1c,6.1,%
+T0131,V431,LDL Cholesterol,176.2,mg/dL
+T0132,V432,LDL Cholesterol,149.1,mg/dL
+T0133,V433,LDL Cholesterol,108.0,mg/dL
+T0134,V434,Systolic BP,159.3,mmHg
+T0135,V435,Systolic BP,160.1,mmHg
+T0136,V436,Systolic BP,160.1,mmHg
+T0137,V437,Systolic BP,159.5,mmHg
+T0138,V438,HbA1c,8.5,%
+T0139,V439,HbA1c,6.1,%
+T0140,V440,Systolic BP,164.4,mmHg
+T0141,V441,Systolic BP,138.6,mmHg
+T0142,V442,Systolic BP,115.1,mmHg
+T0143,V443,Systolic BP,115.0,mmHg
+T0144,V444,Systolic BP,148.3,mmHg
+T0145,V445,Systolic BP,150.1,mmHg
+T0146,V446,Systolic BP,151.0,mmHg
