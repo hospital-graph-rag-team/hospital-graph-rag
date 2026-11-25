@@ -1,9 +1,23 @@
-﻿# Environments
+﻿# Environments and Local Secrets
 .env
+.env.*
+!.env.example
+.venv/
 venv/
 
-# Python cache
+# Python cache and compiled files
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+
+# Testing and Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Operating System and IDE Artifacts
+.DS_Store
+Thumbs.db
+
+# Scratch and Evaluation Logs
+scratch/
