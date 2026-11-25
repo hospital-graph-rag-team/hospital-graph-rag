@@ -33,6 +33,7 @@ interface ClinicalContextValue {
   openAnalytics: (condition?: string) => void;
   demoGateRequired: boolean;
   demoUnlocked: boolean;
+  demoChecked: boolean;
   unlockDemo: (code: string) => Promise<void>;
 }
 
@@ -49,6 +50,7 @@ export function ClinicalProvider({ children }: { children: React.ReactNode }) {
   const [health, setHealth] = useState<HealthStatus | null>(null);
   const [demoGateRequired, setDemoGateRequired] = useState(false);
   const [demoUnlocked, setDemoUnlocked] = useState(true);
+  const [demoChecked, setDemoChecked] = useState(false);
 
   useEffect(() => {
     try {
@@ -134,6 +136,7 @@ export function ClinicalProvider({ children }: { children: React.ReactNode }) {
         if (!active) return;
         setDemoGateRequired(gate.required);
         setDemoUnlocked(gate.unlocked);
+        setDemoChecked(true);
         await refreshHealth();
         if (gate.unlocked) {
           await refreshPatients();
@@ -142,6 +145,7 @@ export function ClinicalProvider({ children }: { children: React.ReactNode }) {
         }
       } catch {
         if (!active) return;
+        setDemoChecked(true);
         await refreshHealth();
         await refreshPatients();
       }
@@ -243,6 +247,7 @@ export function ClinicalProvider({ children }: { children: React.ReactNode }) {
         openAnalytics,
         demoGateRequired,
         demoUnlocked,
+        demoChecked,
         unlockDemo,
       }}
     >

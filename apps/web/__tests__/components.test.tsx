@@ -55,6 +55,7 @@ vi.mock("@/components/providers/clinical-provider", () => ({
     openAnalytics: vi.fn(),
     demoGateRequired: false,
     demoUnlocked: true,
+    demoChecked: true,
     unlockDemo: vi.fn(),
   }),
 }));

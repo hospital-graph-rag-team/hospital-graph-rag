@@ -22,3 +22,6 @@ Thumbs.db
 
 # Scratch and Evaluation Logs
 scratch/
+.vercel
+.env*
+!.env.example

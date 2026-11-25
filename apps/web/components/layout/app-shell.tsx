@@ -160,6 +160,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     askAssistant,
     demoGateRequired,
     demoUnlocked,
+    demoChecked,
   } = useClinical();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -524,7 +525,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </header>
 
         <main className="mx-auto w-full max-w-[1440px] flex-1 p-4 sm:p-6">
-          {demoGateRequired && !demoUnlocked ? null : children}
+          {!demoChecked || (demoGateRequired && !demoUnlocked) ? null : children}
         </main>
       </div>
     </div>

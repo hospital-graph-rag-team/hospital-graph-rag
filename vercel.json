@@ -1,0 +1,18 @@
+{
+  "services": {
+    "clinicalgraph-api": {
+      "root": ".",
+      "framework": "fastapi",
+      "entrypoint": "backend.main:app"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": {
+        "type": "service",
+        "service": "clinicalgraph-api"
+      }
+    }
+  ]
+}
