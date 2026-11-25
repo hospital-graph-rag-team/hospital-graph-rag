@@ -413,3 +413,49 @@ def test_backward_compatible_functions():
     best_meds = get_best_medications_for_condition("Diabetes", driver=mock_driver)
     assert len(best_meds) == 1
     assert best_meds[0]["betterment_rate_pct"] == 80.0
+
+
+def test_get_hospital_overview_stats():
+    """Verify get_hospital_overview_stats parses totals, conditions, and admission types."""
+    from src.graph.retrieval import get_hospital_overview_stats
+
+    mock_driver = MagicMock()
+    mock_session = MagicMock()
+    mock_driver.session.return_value.__enter__.return_value = mock_session
+
+    mock_totals_record = MagicMock()
+    mock_totals_record.__getitem__.side_effect = lambda key: {
+        "total_nodes": 364,
+        "total_relationships": 826,
+        "total_patients": 50,
+        "total_doctors": 10,
+        "total_visits": 146,
+        "total_diagnosis_records": 146,
+        "total_prescription_records": 146,
+        "total_lab_records": 146
+    }
+    mock_totals_res = MagicMock()
+    mock_totals_res.single.return_value = mock_totals_record
+
+    mock_conditions_res = [
+        {"condition": "Hyperlipidemia", "patient_count": 20, "record_count": 54},
+        {"condition": "Type 2 Diabetes", "patient_count": 15, "record_count": 45}
+    ]
+    mock_admission_res = [
+        {"admission_type": "Follow-up", "count": 96},
+        {"admission_type": "Outpatient", "count": 18}
+    ]
+
+    mock_session.run.side_effect = [
+        mock_totals_res,
+        mock_conditions_res,
+        mock_admission_res
+    ]
+
+    stats = get_hospital_overview_stats(driver=mock_driver)
+    assert stats["totals"]["total_patients"] == 50
+    assert stats["totals"]["total_nodes"] == 364
+    assert len(stats["conditions"]) == 2
+    assert stats["conditions"][0]["condition"] == "Hyperlipidemia"
+    assert len(stats["admission_types"]) == 2
+    assert stats["admission_types"][0]["admission_type"] == "Follow-up"

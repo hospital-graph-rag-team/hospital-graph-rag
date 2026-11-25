@@ -5,7 +5,10 @@ import neo4j
 try:
     from graph.connection import get_driver
 except ModuleNotFoundError:
-    from connection import get_driver
+    try:
+        from src.graph.connection import get_driver
+    except ModuleNotFoundError:
+        from connection import get_driver
 
 
 # =====================================================================
@@ -550,6 +553,60 @@ def get_medication_outcomes(condition: str, driver: Optional[Any] = None) -> Dic
             }
 
             return serialize_neo4j_value(result)
+    finally:
+        if should_close and driver:
+            driver.close()
+
+
+def get_hospital_overview_stats(driver=None) -> Dict[str, Any]:
+    """
+    Retrieves cohort-wide aggregate statistics, condition distribution,
+    and admission type breakdown directly from Neo4j for the Hospital Overview dashboard.
+    """
+    should_close = False
+    if driver is None:
+        driver = get_driver()
+        should_close = True
+
+    try:
+        with driver.session() as session:
+            # 1. Total counts
+            q_totals = """
+            RETURN {
+                total_nodes: COUNT { MATCH (n) },
+                total_relationships: COUNT { MATCH ()-[r]->() },
+                total_patients: COUNT { MATCH (:Patient) },
+                total_doctors: COUNT { MATCH (:Doctor) },
+                total_visits: COUNT { MATCH (:Visit) },
+                total_diagnosis_records: COUNT { MATCH ()-[:DIAGNOSED_WITH]->() },
+                total_prescription_records: COUNT { MATCH ()-[:PRESCRIBED]->() },
+                total_lab_records: COUNT { MATCH ()-[:HAD_TEST]->() }
+            } AS stats
+            """
+            res_totals = session.run(q_totals).single()
+            totals = res_totals["stats"] if res_totals else {}
+
+            # 2. Condition distribution
+            q_cond = """
+            MATCH (p:Patient)-[:HAD_VISIT]->(v:Visit)-[:DIAGNOSED_WITH]->(d:Diagnosis)
+            RETURN d.condition AS condition, count(DISTINCT p) AS patient_count, count(v) AS record_count
+            ORDER BY patient_count DESC, condition ASC
+            """
+            conditions = [dict(r) for r in session.run(q_cond)]
+
+            # 3. Admission types
+            q_adm = """
+            MATCH (v:Visit)
+            RETURN v.admission_type AS admission_type, count(v) AS count
+            ORDER BY count DESC, admission_type ASC
+            """
+            admission_types = [dict(r) for r in session.run(q_adm)]
+
+            return serialize_neo4j_value({
+                "totals": totals,
+                "conditions": conditions,
+                "admission_types": admission_types
+            })
     finally:
         if should_close and driver:
             driver.close()
