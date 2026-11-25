@@ -218,46 +218,52 @@ def mock_backend_data():
 @pytest.fixture(autouse=True)
 def mock_default_overview_stats(mock_backend_data):
     """Ensure AppTest never attempts external network calls on initial startup."""
+    mock_db_driver = MagicMock()
+    mock_session = MagicMock()
+    mock_db_driver.session.return_value.__enter__.return_value = mock_session
+    mock_session.run.return_value.single.return_value = {"ping": 1}
+
     with patch("frontend.components.dashboard.get_hospital_overview_stats", return_value=mock_backend_data["stats"]), \
-         patch("frontend.app.load_cached_patient_directory", return_value=mock_backend_data["patients"]), \
-         patch("frontend.app.check_database_status", return_value=True), \
-         patch("src.graph.connection.get_driver") as mock_driver:
+         patch("src.graph.retrieval.get_hospital_overview_stats", return_value=mock_backend_data["stats"]), \
+         patch("frontend.app.get_patient_directory", return_value=mock_backend_data["patients"]), \
+         patch("src.graph.retrieval.get_patient_directory", return_value=mock_backend_data["patients"]), \
+         patch("src.graph.connection.get_driver", return_value=mock_db_driver), \
+         patch("frontend.app.get_driver", return_value=mock_db_driver), \
+         patch("frontend.app.check_database_status", return_value=True):
         yield
 
 
 def test_apptest_startup_hospital_overview(mock_backend_data):
     """Test initial app launch on Hospital Overview tab without errors."""
-    with patch("frontend.app.get_patient_directory", return_value=mock_backend_data["patients"]), \
-         patch("frontend.app.check_database_status", return_value=True), \
-         patch("frontend.components.dashboard.get_hospital_overview_stats", return_value=mock_backend_data["stats"]):
+    at = AppTest.from_file(str(ROOT_DIR / "frontend" / "app.py"))
+    at.run(timeout=10)
 
-        at = AppTest.from_file(str(ROOT_DIR / "frontend" / "app.py"))
-        at.run(timeout=25)
-
-        assert not at.exception
-        # Verify title and academic disclaimer
-        assert any("Academic demonstration" in banner.value for banner in at.markdown)
-        assert any("Hospital Overview" in sub.value for sub in at.subheader)
+    assert not at.exception
+    # Verify title and academic disclaimer
+    assert any("Academic demonstration" in banner.value for banner in at.markdown)
+    assert any("Hospital Overview" in sub.value for sub in at.subheader)
 
 
 def test_apptest_navigation_patient_explorer(mock_backend_data):
     """Test navigating to Patient Explorer and selecting a patient."""
-    with patch("frontend.app.get_patient_directory", return_value=mock_backend_data["patients"]), \
-         patch("frontend.app.check_database_status", return_value=True), \
-         patch("frontend.components.patient_view.get_patient_profile", return_value=mock_backend_data["profile"]), \
+    with patch("frontend.components.patient_view.get_patient_profile", return_value=mock_backend_data["profile"]), \
+         patch("src.graph.retrieval.get_patient_profile", return_value=mock_backend_data["profile"]), \
          patch("frontend.components.patient_view.get_patient_timeline", return_value=mock_backend_data["timeline"]), \
+         patch("src.graph.retrieval.get_patient_timeline", return_value=mock_backend_data["timeline"]), \
          patch("frontend.components.patient_view.get_lab_trends", return_value=mock_backend_data["trends"]), \
-         patch("frontend.components.patient_view.get_followup_comparison", return_value=mock_backend_data["followup"]):
+         patch("src.graph.retrieval.get_lab_trends", return_value=mock_backend_data["trends"]), \
+         patch("frontend.components.patient_view.get_followup_comparison", return_value=mock_backend_data["followup"]), \
+         patch("src.graph.retrieval.get_followup_comparison", return_value=mock_backend_data["followup"]):
 
         at = AppTest.from_file(str(ROOT_DIR / "frontend" / "app.py"))
-        at.run(timeout=25)
+        at.run(timeout=10)
         assert not at.exception
 
         # Switch radio to Patient Explorer
         at.sidebar.radio[0].set_value("Patient Explorer")
         # Select patient P101
         at.sidebar.selectbox[0].set_value("P101 — James Jones")
-        at.run(timeout=25)
+        at.run(timeout=10)
 
         assert not at.exception
         assert any("Patient Explorer" in sub.value for sub in at.subheader)
@@ -267,17 +273,16 @@ def test_apptest_navigation_patient_explorer(mock_backend_data):
 
 def test_apptest_navigation_medication_analytics(mock_backend_data):
     """Test navigating to Medication Analytics view and rendering condition metrics."""
-    with patch("frontend.app.get_patient_directory", return_value=mock_backend_data["patients"]), \
-         patch("frontend.app.check_database_status", return_value=True), \
-         patch("frontend.components.analytics.get_medication_outcomes", return_value=mock_backend_data["analytics"]):
+    with patch("frontend.components.analytics.get_medication_outcomes", return_value=mock_backend_data["analytics"]), \
+         patch("src.graph.retrieval.get_medication_outcomes", return_value=mock_backend_data["analytics"]):
 
         at = AppTest.from_file(str(ROOT_DIR / "frontend" / "app.py"))
-        at.run(timeout=25)
+        at.run(timeout=10)
         assert not at.exception
 
         # Switch radio to Medication Analytics
         at.sidebar.radio[0].set_value("Medication Analytics")
-        at.run(timeout=25)
+        at.run(timeout=10)
 
         assert not at.exception
         assert any("Medication Analytics" in sub.value for sub in at.subheader)
@@ -286,19 +291,19 @@ def test_apptest_navigation_medication_analytics(mock_backend_data):
 
 def test_apptest_navigation_knowledge_graph(mock_backend_data):
     """Test navigating to Patient Knowledge Graph view with active patient."""
-    with patch("frontend.app.get_patient_directory", return_value=mock_backend_data["patients"]), \
-         patch("frontend.app.check_database_status", return_value=True), \
-         patch("frontend.components.graph_view.get_patient_timeline", return_value=mock_backend_data["timeline"]), \
-         patch("frontend.components.graph_view.get_patient_profile", return_value=mock_backend_data["profile"]):
+    with patch("frontend.components.graph_view.get_patient_timeline", return_value=mock_backend_data["timeline"]), \
+         patch("src.graph.retrieval.get_patient_timeline", return_value=mock_backend_data["timeline"]), \
+         patch("frontend.components.graph_view.get_patient_profile", return_value=mock_backend_data["profile"]), \
+         patch("src.graph.retrieval.get_patient_profile", return_value=mock_backend_data["profile"]):
 
         at = AppTest.from_file(str(ROOT_DIR / "frontend" / "app.py"))
-        at.run(timeout=25)
+        at.run(timeout=10)
         assert not at.exception
 
         # Select patient P101 and switch to Knowledge Graph
         at.sidebar.selectbox[0].set_value("P101 — James Jones")
         at.sidebar.radio[0].set_value("Patient Knowledge Graph")
-        at.run(timeout=25)
+        at.run(timeout=10)
 
         assert not at.exception
         assert any("Patient Knowledge Graph Visualization" in sub.value for sub in at.subheader)
@@ -309,32 +314,29 @@ def test_apptest_chat_patient_context_switching_isolation(mock_backend_data):
     Verify that switching patient context clears conversation history
     to prevent cross-patient context contamination.
     """
-    with patch("frontend.app.get_patient_directory", return_value=mock_backend_data["patients"]), \
-         patch("frontend.app.check_database_status", return_value=True):
+    at = AppTest.from_file(str(ROOT_DIR / "frontend" / "app.py"))
+    at.run(timeout=10)
+    assert not at.exception
 
-        at = AppTest.from_file(str(ROOT_DIR / "frontend" / "app.py"))
-        at.run(timeout=25)
-        assert not at.exception
+    # Switch to AI Assistant with P101
+    at.sidebar.selectbox[0].set_value("P101 — James Jones")
+    at.sidebar.radio[0].set_value("AI Assistant")
+    at.run(timeout=10)
 
-        # Switch to AI Assistant with P101
-        at.sidebar.selectbox[0].set_value("P101 — James Jones")
-        at.sidebar.radio[0].set_value("AI Assistant")
-        at.run(timeout=25)
+    # Inject a message into session state for P101
+    at.session_state["messages"] = [
+        {"role": "user", "content": "What is P101's diagnosis?"},
+        {"role": "assistant", "answer": "P101 has Hyperlipidemia.", "citations": ["P101"]}
+    ]
+    at.session_state["chat_patient_id"] = "P101"
 
-        # Inject a message into session state for P101
-        at.session_state["messages"] = [
-            {"role": "user", "content": "What is P101's diagnosis?"},
-            {"role": "assistant", "answer": "P101 has Hyperlipidemia.", "citations": ["P101"]}
-        ]
-        at.session_state["chat_patient_id"] = "P101"
+    # Switch patient in sidebar to second patient (options[2])
+    second_patient_opt = at.sidebar.selectbox[0].options[2]
+    second_pid = second_patient_opt.split(" — ")[0].strip()
+    at.sidebar.selectbox[0].set_value(second_patient_opt)
+    at.run(timeout=10)
 
-        # Switch patient in sidebar to second patient (options[2])
-        second_patient_opt = at.sidebar.selectbox[0].options[2]
-        second_pid = second_patient_opt.split(" — ")[0].strip()
-        at.sidebar.selectbox[0].set_value(second_patient_opt)
-        at.run(timeout=25)
-
-        assert not at.exception
-        # Chat patient context mismatch must trigger conversation reset
-        assert at.session_state["messages"] == []
-        assert at.session_state["chat_patient_id"] == second_pid
+    assert not at.exception
+    # Chat patient context mismatch must trigger conversation reset
+    assert at.session_state["messages"] == []
+    assert at.session_state["chat_patient_id"] == second_pid
