@@ -4,6 +4,7 @@
 !.env.example
 .venv/
 venv/
+.vercel/
 
 # Python cache and compiled files
 __pycache__/

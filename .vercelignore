@@ -1,0 +1,31 @@
+# Version control & local environments
+.git/
+.gitignore
+.env
+.env.*
+.venv/
+venv/
+.vercel/
+.streamlit/
+.vscode/
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Frontend, legacy Streamlit, tests, synthetic CSVs, and docs (not needed by FastAPI backend)
+apps/
+frontend/
+tests/
+data/
+docs/
+scratch/
+scripts/
+src/data_generation/
+render.yaml
+*.md
+LICENSE

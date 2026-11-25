@@ -101,6 +101,55 @@ def test_production_fails_closed_without_token(mock_driver, monkeypatch):
     app.dependency_overrides.clear()
 
 
+def test_vercel_production_env_enforces_token_and_lean_pyproject(mock_driver, monkeypatch):
+    import importlib
+    from pathlib import Path
+    import sys
+    import tomllib
+
+    monkeypatch.delenv("ENVIRONMENT", raising=False)
+    monkeypatch.setenv("VERCEL_ENV", "production")
+    monkeypatch.delenv("BACKEND_API_TOKEN", raising=False)
+
+    app = create_app()
+    app.dependency_overrides[get_neo4j_driver] = lambda: mock_driver
+    with TestClient(app) as tc:
+        res = tc.get("/api/v1/patients")
+        assert res.status_code == 503
+    app.dependency_overrides.clear()
+
+    pyproject_path = Path(__file__).resolve().parents[1] / "pyproject.toml"
+    data = tomllib.loads(pyproject_path.read_text(encoding="utf-8"))
+    assert data["tool"]["vercel"]["entrypoint"] == "backend.main:app"
+    deps = " ".join(data["project"]["dependencies"])
+    assert "fastapi" in deps
+    assert "neo4j" in deps
+    assert "openai" in deps
+    assert "streamlit" not in deps
+    assert "plotly" not in deps
+    assert "pandas" not in deps
+
+    mod_name, attr_name = data["tool"]["vercel"]["entrypoint"].split(":")
+    mod = importlib.import_module(mod_name)
+    assert hasattr(mod, attr_name)
+
+    import subprocess
+    proc = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            "import sys\n"
+            "for p in ('streamlit','plotly','pandas','numpy','pytest'): sys.modules[p] = None\n"
+            "import backend.main\n"
+            "assert hasattr(backend.main, 'app')",
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert proc.returncode == 0, proc.stderr
+
+
 def test_patient_id_validation_rejects_malformed_ids(client):
     res = client.get("/api/v1/patients/INVALID_ID!")
     assert res.status_code == 422

@@ -60,7 +60,14 @@ def _parse_positive_float(raw: str, default: float) -> float:
 
 def get_settings() -> BackendSettings:
     """Reads current environment variables dynamically for testability and runtime clarity."""
-    environment = os.getenv("ENVIRONMENT", "development").strip().lower() or "development"
+    raw_env = os.getenv("ENVIRONMENT", "").strip().lower()
+    vercel_env = os.getenv("VERCEL_ENV", "").strip().lower()
+    if raw_env:
+        environment = raw_env
+    elif vercel_env == "production":
+        environment = "production"
+    else:
+        environment = "development"
     backend_api_token = os.getenv("BACKEND_API_TOKEN", "").strip()
     cors_raw = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000")
 

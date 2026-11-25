@@ -109,7 +109,7 @@ export async function proxyBackendRequest(
     return NextResponse.json(
       {
         detail: isAbort
-          ? "Backend request timed out. If the Render service is waking from cold start, retry in a few seconds."
+          ? "Backend request timed out. The serverless function may be warming up — please retry in a few seconds."
           : "Unable to reach the ClinicalGraph backend service.",
       },
       { status: isAbort ? 504 : 502 }

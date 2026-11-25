@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { proxyBackendRequest, verifyDemoAccessCookie } from "@/lib/backend-proxy";
 
+export const maxDuration = 60;
+
 export async function POST(request: NextRequest) {
   const authorized = await verifyDemoAccessCookie();
   if (!authorized) {

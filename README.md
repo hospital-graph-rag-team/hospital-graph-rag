@@ -18,15 +18,15 @@ The original Streamlit frontend (`frontend/app.py`) is preserved intact as a loc
 
 ```
 ┌───────────────────────────────────────────────────────────────────────────┐
-│                      Vercel — Next.js 15 Frontend (apps/web)              │
+│               Vercel Project 2 — Next.js 15 Frontend (apps/web)           │
 │   Overview • Patient Explorer • Knowledge Graph • AI Assistant • Meds     │
-│   Server-Side Proxy Routes (/api/*) injecting X-Backend-Token             │
+│   Server-Side Proxy Routes (/api/*) + DEMO_ACCESS_CODE + X-Backend-Token  │
 └────────────────────────────────────┬──────────────────────────────────────┘
                                      │ HTTPS + X-Backend-Token
                                      ▼
 ┌───────────────────────────────────────────────────────────────────────────┐
-│                     Render — FastAPI Backend (backend/)                   │
-│   Pydantic Schemas • Rate Limiting • Token Auth • Sanitized Errors        │
+│              Vercel Project 1 — FastAPI Backend (root pyproject.toml)     │
+│   Entrypoint: backend.main:app • Pydantic • Token Auth • Rate Limiting    │
 └──────────────┬──────────────────────────────────────────┬─────────────────┘
                │                                          │
                ▼                                          ▼
@@ -53,7 +53,7 @@ The original Streamlit frontend (`frontend/app.py`) is preserved intact as a loc
 | **Backend (`backend`)** | Python 3.12, FastAPI, Uvicorn, Pydantic v2, httpx |
 | **Core RAG & Graph (`src`)** | Neo4j Python Driver 6.x, OpenAI Python SDK (Groq-compatible), `pandas`, `python-dotenv` |
 | **Legacy Fallback (`frontend`)** | Streamlit, Plotly |
-| **Cloud Targets** | Vercel (Next.js `apps/web`), Render (FastAPI root), Neo4j AuraDB, Groq Cloud |
+| **Cloud Targets** | Vercel Hobby (2 projects: `clinicalgraph-api` root + `clinicalgraph-web` `apps/web`), Neo4j AuraDB, Groq Cloud (optional Render fallback via `render.yaml`) |
 
 ---
 
@@ -182,10 +182,10 @@ Interactive OpenAPI documentation is available locally at `http://127.0.0.1:8000
 ## 7. Automated Testing & Verification
 
 ```bash
-# Backend + Core Graph + RAG + Streamlit Regression Suite (93 tests)
+# Backend + Core Graph + RAG + Streamlit Regression Suite (94 tests)
 .venv/bin/python -m pytest -q
 
-# Frontend Unit/Component Tests, Lint, TypeScript, and Production Build
+# Frontend Unit/Component & Patient Selection Regression Tests (11 tests), Lint, TypeScript, Build
 cd apps/web
 npm test
 npm run lint
@@ -195,18 +195,21 @@ npm run build
 
 ---
 
-## 8. Cloud Deployment (Render + Vercel)
+## 8. Cloud Deployment (Vercel-Only Free Hobby Hosting)
 
-See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for complete step-by-step instructions, environment variable tables, and troubleshooting — including how splitting `apps/web` from the Python root resolves the previous `PYTHON_ENTRYPOINT_NOT_FOUND` Vercel error.
+ClinicalGraph 2.0 deploys entirely on **Vercel Hobby (free tier)** across two separate Vercel projects without requiring credit card verification:
 
-- **Render config:** [render.yaml](render.yaml)
-- **Vercel root directory:** `apps/web` (Next.js App Router)
+- **Backend Project (`clinicalgraph-api`):** Root directory `.`, configured via [pyproject.toml](pyproject.toml) (`[tool.vercel] entrypoint = "backend.main:app"`) and [.vercelignore](.vercelignore) (excludes frontend, Streamlit, tests, and CSVs).
+- **Frontend Project (`clinicalgraph-web`):** Root directory `apps/web`, Next.js App Router, configured with `BACKEND_URL` pointing to `clinicalgraph-api`, matching `BACKEND_API_TOKEN`, and optional `DEMO_ACCESS_CODE`.
+- **Optional Render Fallback:** [render.yaml](render.yaml) is preserved if Render hosting is ever needed later.
+
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for complete Vercel CLI commands, environment variable tables, Hobby limitations, private GitHub organization details, and troubleshooting.
 
 ---
 
 ## 9. Security Model & Known Limitations
 
-- **Credential Isolation:** `NEO4J_URI`, `NEO4J_PASSWORD`, `GROQ_API_KEY`, and `BACKEND_API_TOKEN` reside strictly on the server. Zero `NEXT_PUBLIC_` secrets are used.
-- **Server-to-Server Auth:** When `ENVIRONMENT=production`, FastAPI fails closed unless `BACKEND_API_TOKEN` is configured and matched via `X-Backend-Token` / `Authorization: Bearer`.
-- **Rate Limiting & Input Validation:** Sliding-window rate limiters guard `/api/v1/chat` (20/min default) and read routes (180/min default); `patient_id` inputs are regex-validated (`^P\d{2,6}$`), errors are sanitized against URI/key leakage, and no Cypher write or arbitrary query endpoints exist.
+- **Credential Isolation:** `NEO4J_URI`, `NEO4J_PASSWORD`, `GROQ_API_KEY`, `BACKEND_API_TOKEN`, and `DEMO_ACCESS_CODE` reside strictly on the server. Zero `NEXT_PUBLIC_` secrets are used.
+- **Server-to-Server Auth & Demo Gate:** When `ENVIRONMENT=production` (or `VERCEL_ENV=production`), FastAPI fails closed (`503`) unless `BACKEND_API_TOKEN` is configured and matched via `X-Backend-Token` / `Authorization: Bearer`. When `DEMO_ACCESS_CODE` is set on the frontend, all data and AI `/api/*` proxies require a verified HttpOnly `cg_demo_access` cookie.
+- **Rate Limiting & Input Validation:** Sliding-window rate limiters guard `/api/v1/chat` (20/min default) and read routes (180/min default) per serverless isolate; `patient_id` inputs are regex-validated (`^P\d{2,6}$`), errors are sanitized against URI/key leakage, and no Cypher write or arbitrary query endpoints exist.
 - **Observational & Academic Scope:** All clinical records are synthetic; medication comparisons reflect observational biomarker decreases and do not prove medical causality or clinical superiority. Not HIPAA-compliant or intended for real patient care.

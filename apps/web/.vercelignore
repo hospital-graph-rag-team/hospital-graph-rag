@@ -1,0 +1,10 @@
+node_modules/
+.next/
+out/
+.env
+.env.*
+!.env.example
+__tests__/
+vitest.config.ts
+vitest.setup.ts
+*.tsbuildinfo

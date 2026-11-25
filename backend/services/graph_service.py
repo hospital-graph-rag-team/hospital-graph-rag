@@ -60,13 +60,15 @@ def get_neo4j_driver() -> Any:
 
 
 def check_neo4j_connectivity(driver: Optional[Any] = None) -> bool:
-    """Performs a lightweight read-only connectivity check against Neo4j."""
+    """Performs a lightweight read-only connectivity check against Neo4j, resetting stale drivers."""
     try:
         active_driver = driver or get_neo4j_driver()
         with active_driver.session(default_access_mode="READ") as session:
             rec = session.run("RETURN 1 AS ping").single()
             return bool(rec and rec.get("ping") == 1)
     except Exception:
+        if driver is None:
+            close_shared_driver()
         return False
 
 
