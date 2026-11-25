@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --color-bg-main: var(--cg-bg-main);
+  --color-bg-sidebar: var(--cg-bg-sidebar);
+  --color-bg-panel: var(--cg-bg-panel);
+  --color-bg-elevated: var(--cg-bg-elevated);
+  --color-border-subtle: var(--cg-border);
+  --color-accent-teal: var(--cg-accent-teal);
+  --color-accent-sky: var(--cg-accent-sky);
+  --color-accent-violet: var(--cg-accent-violet);
+  --color-text-primary: var(--cg-text-primary);
+  --color-text-secondary: var(--cg-text-secondary);
+  --color-status-success: var(--cg-success);
+  --color-status-warning: var(--cg-warning);
+  --color-status-error: var(--cg-error);
+}
+
+:root,
+.dark {
+  --cg-bg-main: #080C12;
+  --cg-bg-sidebar: #0C111A;
+  --cg-bg-panel: #101722;
+  --cg-bg-elevated: #151E2B;
+  --cg-border: #243041;
+  --cg-border-strong: #314158;
+  --cg-accent-teal: #2DD4BF;
+  --cg-accent-sky: #38BDF8;
+  --cg-accent-violet: #818CF8;
+  --cg-text-primary: #F1F5F9;
+  --cg-text-secondary: #94A3B8;
+  --cg-text-muted: #64748B;
+  --cg-success: #34D399;
+  --cg-warning: #FBBF24;
+  --cg-error: #F87171;
+  --cg-chart-grid: rgba(148, 163, 184, 0.1);
+  color-scheme: dark;
+}
+
+.light {
+  --cg-bg-main: #F4F7FB;
+  --cg-bg-sidebar: #FFFFFF;
+  --cg-bg-panel: #FFFFFF;
+  --cg-bg-elevated: #F8FAFC;
+  --cg-border: #E2E8F0;
+  --cg-border-strong: #CBD5E1;
+  --cg-accent-teal: #0D9488;
+  --cg-accent-sky: #0284C7;
+  --cg-accent-violet: #6366F1;
+  --cg-text-primary: #0F172A;
+  --cg-text-secondary: #475569;
+  --cg-text-muted: #64748B;
+  --cg-success: #059669;
+  --cg-warning: #D97706;
+  --cg-error: #DC2626;
+  --cg-chart-grid: rgba(15, 23, 42, 0.08);
+  color-scheme: light;
+}
+
+@layer base {
+  * {
+    border-color: var(--cg-border);
+  }
+
+  html,
+  body {
+    background-color: var(--cg-bg-main);
+    color: var(--cg-text-primary);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom thin scrollbars for dark clinical workspace */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.22);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.38);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
